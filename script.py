@@ -11,6 +11,7 @@ class Pokemon:
         self.abilities = abilities
         self.stats = dict(zip(stats[0], stats[1]))
         self.details = str(self).split("\n")
+        self.comparison = ["_" for _ in range(len(name))]
 
 
     def __repr__(self):
@@ -31,6 +32,12 @@ class Pokemon:
     def get_random_details(self):
         print("We can only remember some details about this Pokemon...")
         print("\n".join(random.sample(self.details[1:],random.randint(2,3))))
+
+    
+    def update_comparison(self, guess):
+        for i in range(min(len(self.name), len(guess))):
+            if guess[i] == self.name[i] and self.comparison[i] == "_":
+                self.comparison[i] = guess[i]
 
 
 with open("pokedex.json", "r") as json_file:
@@ -57,8 +64,9 @@ wild_pokemon.get_all_details() if random.random() >= 0.75 else wild_pokemon.get_
 print()
 guesses = 4 # allows 5 guesses
 while True:
-    print("Do you know this Pokemon's name?")
+    print("Do you know this Pokemon's name? {0}".format(" ".join(wild_pokemon.comparison)))
     guess = input()
+    wild_pokemon.update_comparison(guess)
     print()
     if guesses == 0:
         print()
