@@ -66,7 +66,7 @@ guesses = 4 # allows 5 guesses
 while True:
     print("Do you know this Pokemon's name? {0}".format(" ".join(wild_pokemon.comparison)))
     guess = input()
-    wild_pokemon.update_comparison(guess)
+    wild_pokemon.update_comparison(guess.lower())
     print()
     if guesses == 0:
         print()
